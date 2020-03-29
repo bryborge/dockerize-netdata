@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  netdata:
+    cap_add:
+      - SYS_PTRACE
+    container_name: netdata
+    image: netdata/netdata:v1.20.0
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.custom.headers.browserXSSFilter=true"
+      - "traefik.http.middlewares.custom.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.custom.headers.forceSTSHeader=true"
+      - "traefik.http.middlewares.custom.headers.frameDeny=true"
+      - "traefik.http.middlewares.custom.headers.sslredirect=true"
+      - "traefik.http.middlewares.custom.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.custom.headers.stsPreload=true"
+      - "traefik.http.middlewares.custom.headers.stsSeconds=315360000"
+      - "traefik.http.routers.netdata.entrypoints=websecure"
+      - "traefik.http.routers.netdata.rule=Host(`netdata.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.netdata.tls.certresolver=letsencrypt"
+    networks:
+      - traefik_proxy
+    ports:
+      - 19999:19999
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  traefik_proxy:
+    external: true
