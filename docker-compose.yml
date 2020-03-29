@@ -16,7 +16,9 @@ services:
       - "traefik.http.middlewares.custom.headers.stsIncludeSubdomains=true"
       - "traefik.http.middlewares.custom.headers.stsPreload=true"
       - "traefik.http.middlewares.custom.headers.stsSeconds=315360000"
+      - "traefik.http.middlewares.auth.basicauth.usersfile=/config/usersfile"
       - "traefik.http.routers.netdata.entrypoints=websecure"
+      - "traefik.http.routers.netdata.middlewares=auth"
       - "traefik.http.routers.netdata.rule=Host(`netdata.${DOMAIN_NAME}`)"
       - "traefik.http.routers.netdata.tls.certresolver=letsencrypt"
     networks:
@@ -27,6 +29,7 @@ services:
     security_opt:
       - apparmor:unconfined
     volumes:
+      - ./config:/config
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
