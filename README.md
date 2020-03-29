@@ -19,6 +19,12 @@ inside a container and is specifically designed to work with
     git clone https://github.com/sonofborge/dockerize-netdata.git netdata && cd netdata
     ```
 
+1.  Create and modify `.env` for your needs.
+
+    ```sh
+    cp .env.example .env
+    ```
+
 1.  Run Docker Compose
 
     ```sh
