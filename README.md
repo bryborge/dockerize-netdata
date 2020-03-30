@@ -25,12 +25,6 @@ inside a container and is specifically designed to work with
     cp .env.example .env
     ```
 
-1.  Generate a user/password hash with `htpasswd` and store the output in `config/usersfile`.
-
-    ```sh
-    htpasswd -nB $USER
-    ```
-
 1.  Run Docker Compose
 
     ```sh
