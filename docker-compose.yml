@@ -5,7 +5,7 @@ services:
     cap_add:
       - SYS_PTRACE
     container_name: netdata
-    image: netdata/netdata:v1.20.0
+    image: netdata/netdata:v1.21.0
     labels:
       - "traefik.enable=true"
       - "traefik.http.middlewares.custom.headers.browserXSSFilter=true"
